@@ -9,6 +9,7 @@ class Index extends AdminBase
 	 */
     public function index()
     {
+    	echo '我是index';die;
         return $this->fetch();
     }
 }
