@@ -1,0 +1,105 @@
+<template>
+    <div class="box">
+
+        <div class="bottom">
+            <span>类型</span>
+            <div class="btm">
+                <el-select v-model="value" placeholder="请选择">
+                    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+                    </el-option>
+                </el-select>
+            </div>
+        </div>
+        <div class="bottom">
+            <span>标题</span>
+            <el-input class="btm" placeholder="请输入标题"></el-input>
+        </div>
+        <div class="bottom">
+            <span>排序</span>
+            <el-input class="btm" placeholder="请输入序号"></el-input>
+        </div>
+        <div class="bottom">
+            <span>正文</span>
+            <quill-editor class="btm" ref="myTextEditor" v-model="content" :config="editorOption" @blur="onEditorBlur($event)" @focus="onEditorFocus($event)" @ready="onEditorReady($event)">
+            </quill-editor>
+        </div>
+        <div id="aa"></div>
+
+    </div>
+</template>
+<script>
+import "quill/dist/quill.core.css";
+import "quill/dist/quill.snow.css";
+import "quill/dist/quill.bubble.css";
+
+import { quillEditor } from "vue-quill-editor";
+// content 内容对应的字段
+// @change="onEditorChange($event)" 内容改变事件
+export default {
+    components: {
+        quillEditor
+    },
+    data() {
+        return {
+            content: "<h2>I am Example</h2>",
+            editorOption: {
+                // something config
+            },
+            options: [
+                {
+                    value: "选项1",
+                    label: "关于我们"
+                },
+                {
+                    value: "选项2",
+                    label: "首页合作伙伴"
+                }
+            ],
+            value: ""
+        };
+    },
+    // if you need to manually control the data synchronization, parent component needs to explicitly emit an event instead of relying on implicit binding
+    // 如果需要手动控制数据同步，父组件需要显式地处理changed事件
+    methods: {
+        onEditorBlur(editor) {
+            console.log("editor blur!", editor);
+            console.log(editor.container);
+            var a = document.getElementById("aa");
+            console.log(a, editor.container.innerHTML);
+            a.innerHtml(editor.container.innerHTML);
+        },
+        onEditorFocus(editor) {
+            console.log("editor focus!", editor);
+        },
+        onEditorReady(editor) {
+            console.log("editor ready!", editor);
+        },
+        onEditorChange({ editor, html, text }) {
+            // console.log('editor change!', editor, html, text)
+            this.content = html;
+            console.log(this.content);
+        }
+    },
+    // if you need to get the current editor object, you can find the editor object like this, the $ref object is a ref attribute corresponding to the dom redefined
+    // 如果你需要得到当前的editor对象来做一些事情，你可以像下面这样定义一个方法属性来获取当前的editor对象，实际上这里的$refs对应的是当前组件内所有关联了ref属性的组件元素对象
+    computed: {
+        editor() {
+            return this.$refs.myTextEditor.quillEditor;
+        }
+    },
+    mounted() {
+        // you can use current editor object to do something(editor methods)
+        console.log("this is my editor", this.editor);
+        // this.editor to do something...
+    }
+};
+</script>
+<style  scoped>
+.bottom {
+    margin-top: 20px;
+}
+.btm {
+    margin-top: 10px;
+}
+</style>
+
