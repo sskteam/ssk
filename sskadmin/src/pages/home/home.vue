@@ -13,6 +13,7 @@ import headerNav from "@/components/headerNav"; //引入头部导航栏
 import leftNav from "@/components/leftNav"; //引入头部导航栏
 import infoTitle from "@/components/infoTitle"; //引入标题
 
+
 export default {
     
     components: {

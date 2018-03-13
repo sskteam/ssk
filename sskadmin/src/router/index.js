@@ -53,22 +53,25 @@ Vue.use(Router)
   @children 子路由
 */
 export default new Router({
+  
   routes: [
     {
-      path: '/', component: home, children: [
+      path: '/',redirect: '/home', children: [
 
-        { path: '/', name: 'welcome2', component: welcome },  
+        { path: '/', name: 'admin', redirect: '/admin' },
       ]
     },
+   
 
     { path: '/login', component: login },
 
     {
       path: '/home', component: home, children: [
         // 欢迎页面
-        { path: '/', name: 'welcome3', component: welcome },
-        { path: '/welcome', name: 'welcome', component: welcome },
+        // { path: '/', name: 'welcome3', redirect: '/welcome'},
+        // { path: '/welcome', name: 'welcome', component: welcome },
         // 管理员管理
+        { path: '/', name: 'admin2', redirect: '/admin' },
         { path: '/admin', name: 'admin', component: admin },
         { path: '/adminWrite', name: 'adminWrite', component: adminWrite },
         { path: '/addAdmin', name: 'addAdmin', component: addAdmin },

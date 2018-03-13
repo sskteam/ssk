@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 
 
 
+
 Vue.use(Vuex);
 /*
     state状态对象 也就是所有的模块的共享值 谁都可以来拿
@@ -18,6 +19,7 @@ const state = {
 const mutations = {
     getTit(state,tit) { //标题
        state.tit = tit;
+       
     }
 }
 /*

@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import config from '../config'
 export default {
     data() {
         return {};
@@ -20,7 +21,15 @@ export default {
     methods: {
         // 退出
         loginout() {
-            this.$router.push({path:"/login"});
+            this.$http.post(`/admin/admin/logout`)
+            .then(res=> {
+                console.log(res)
+                if(res.data.isSuccess == 1) {
+                    console.log(res)
+                    this.$router.replace('/login');
+                }
+            })
+            this.$router.replace('/login');
         },
         goWelcome() {
              this.$router.push({path:"/welcome"});

@@ -39,10 +39,11 @@ export default {
     },
     data() {
         return {
-            content: "<h2>I am Example</h2>",
-            editorOption: {
+            content: "",    //内容
+            editorOption: { //配置
                 // something config
             },
+            
             options: [
                 {
                     value: "选项1",
@@ -60,17 +61,20 @@ export default {
     // 如果需要手动控制数据同步，父组件需要显式地处理changed事件
     methods: {
         onEditorBlur(editor) {
-            console.log("editor blur!", editor);
+            
+            console.log(this.content)
         },
         onEditorFocus(editor) {
-            console.log("editor focus!", editor);
+            // console.log("editor focus!", editor);
         },
         onEditorReady(editor) {
-            console.log("editor ready!", editor);
+            // console.log("editor ready!", editor);
         },
         onEditorChange({ editor, html, text }) {
-            // console.log('editor change!', editor, html, text)
-            this.content = html;
+             this.content = html;
+            console.log('editor change!', editor, html, text)
+           
+            
         }
     },
     // if you need to get the current editor object, you can find the editor object like this, the $ref object is a ref attribute corresponding to the dom redefined

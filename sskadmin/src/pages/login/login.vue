@@ -7,7 +7,7 @@
                     <el-input v-model="ruleForm2.useName" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="密码" prop="pass">
-                    <el-input type="password" v-model="ruleForm2.pass" auto-complete="off"></el-input>
+                    <el-input type="password" v-model="ruleForm2.pass" auto-complete="off" @keyup.native="login()"></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="login()">登录</el-button>
@@ -18,9 +18,9 @@
 </template>
 
 <script>
-
 import store from "@/vuex/store";
-import {mapState} from 'vuex';
+import { mapState } from "vuex";
+import config from "../../config";
 
 export default {
     data() {
@@ -67,10 +67,19 @@ export default {
     },
     methods: {
         login() {
-
-            if(!this.isLogin || !this.isLogin2) return;
+            if (!this.isLogin || !this.isLogin2) return;
+            this.$http.post(`/admin/admin/login`, {
+                name: this.ruleForm2.useName,
+                password: this.ruleForm2.pass
+            })
+            .then(res=> {
+                console.log(res)
+                if(res.data.isSuccess == 1) {
+                    console.log(1111)
+                    this.$router.push('/home');
+                }
+            })
             
-            this.$router.push({path:"/home"})
         }
     }
 };

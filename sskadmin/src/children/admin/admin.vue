@@ -1,9 +1,9 @@
 <template>
   <div class="box admin">
     <div class="optionMsg">
-       <el-button type="primary" @click="goAdd()">添加管理员</el-button>
+      <el-button type="primary" @click="goAdd()">添加管理员</el-button>
     </div>
-    
+
     <el-table :data="tableData" style="width: 100%">
       <el-table-column label="ID" width="180">
         <template slot-scope="scope">
@@ -17,30 +17,6 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="权限">
-        <template slot-scope="scope">
-          <div slot="reference" class="name-wrapper">
-            <el-tag size="medium">{{ scope.row.name }}</el-tag>
-            <el-tag size="medium">{{ scope.row.name }}</el-tag>
-            <el-tag size="medium">{{ scope.row.name }}</el-tag>
-            <el-tag size="medium">{{ scope.row.name }}</el-tag>
-
-            <el-tag size="medium">{{ scope.row.name }}</el-tag>
-
-            <el-tag size="medium">{{ scope.row.name }}</el-tag>
-            <el-tag size="medium">{{ scope.row.name }}</el-tag>
-            <el-tag size="medium">{{ scope.row.name }}</el-tag>
-            <el-tag size="medium">{{ scope.row.name }}</el-tag>
-            <el-tag size="medium">{{ scope.row.name }}</el-tag>
-            <el-tag size="medium">{{ scope.row.name }}</el-tag>
-
-            <el-tag size="medium">{{ scope.row.name }}</el-tag>
-            <el-tag size="medium">{{ scope.row.name }}</el-tag>
-            <el-tag size="medium">{{ scope.row.name }}</el-tag>
-
-          </div>
-        </template>
-      </el-table-column>
       <el-table-column label="操作" width="180">
         <template slot-scope="scope">
           <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
@@ -48,10 +24,13 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
   </div>
 </template>
 <script>
+import store from "@/vuex/store";
+import { mapState } from "vuex";
+import config from "../../config";
 export default {
     data() {
         return {
@@ -81,17 +60,23 @@ export default {
     },
     methods: {
         handleEdit(index, row) {
-            this.$router.push('adminWrite');
+            this.$router.push("adminWrite");
         },
         handleDelete(index, row) {
             console.log(index, row);
         },
-        goAdd(){
-          this.$router.push('/addAdmin')
+        goAdd() {
+            this.$router.push("/addAdmin");
         }
+    },
+    created() {
+        store.commit("getTit", "管理员列表");
+        this.$http.post(`/admin/admin/lists`).then(res => {
+            console.log(res);
+        });
     }
 };
 </script>
 <style>
-  
+
 </style>

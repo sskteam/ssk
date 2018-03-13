@@ -10,7 +10,15 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/api': {
+        target: '127.0.1.1',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': '/'
+        }
+      }
+    },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
@@ -20,7 +28,7 @@ module.exports = {
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
 
-    
+
     /**
      * Source Maps
      */
@@ -45,7 +53,7 @@ module.exports = {
     // 二级目录，存放静态资源文件的目录，位于dist文件夹下
     assetsSubDirectory: 'default',
     // 设置之后构建的产品文件在注入到index.html中的时候就会带上这里的发布路径
-    assetsPublicPath: '/dist/admin',
+    assetsPublicPath: './dist/admin',
 
     /**
      * Source Maps

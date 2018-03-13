@@ -11,23 +11,9 @@
                 <el-form-item label="确认密码" prop="checkPass">
                     <el-input type="password" v-model="ruleForm2.checkPass" auto-complete="off"></el-input>
                 </el-form-item>
-                <el-form-item  prop="power">
-                    <div class="auth">用户权限</div>
-                    <div>
-                        <el-switch v-model="value3" active-text="按月付费">
-                        </el-switch>
-                        <el-switch v-model="value3" active-text="按月付费">
-                        </el-switch>
-                        <el-switch v-model="value3" active-text="按月付费">
-                        </el-switch>
-                        <el-switch v-model="value3" active-text="按月付费">
-                        </el-switch>
-                        <el-switch v-model="value3" active-text="按月付费">
-                        </el-switch>
-                    </div>
-                </el-form-item>
+
                 <el-form-item>
-                    <el-button type="primary" @click="submitForm('ruleForm2')">保存</el-button>
+                    <el-button type="primary" @click="submitForm()">保存</el-button>
                 </el-form-item>
             </el-form>
         </div>
@@ -39,7 +25,7 @@ import { mapState } from "vuex";
 
 export default {
     data() {
-        var checkUser= (rule, value, callback) => {
+        var checkUser = (rule, value, callback) => {
             if (!value) {
                 return callback(new Error("年龄不能为空"));
             }
@@ -78,32 +64,29 @@ export default {
             ruleForm2: {
                 pass: "",
                 checkPass: "",
-                user: "",
+                user: ""
             },
             rules2: {
                 pass: [{ validator: validatePass, trigger: "blur" }],
                 checkPass: [{ validator: validatePass2, trigger: "blur" }],
-                user: [{ validator: checkUser, trigger: "blur" }],
+                user: [{ validator: checkUser, trigger: "blur" }]
             },
-            value3:true,
+            value3: true
         };
     },
     created() {
-        store.commit('getTit','新增管理员')
+        store.commit("getTit", "新增管理员");
     },
     methods: {
-        submitForm(formName) {
-            this.$refs[formName].validate(valid => {
-                if (valid) {
-                    alert("submit!");
-                } else {
-                    console.log("error submit!!");
-                    return false;
+        submitForm() {
+            this.$http.post("/admin/admin/add").then(res => {
+                console.log(res);
+                if (res.data.isSuccess == 1) {
+                    console.log(1111);
+                    
+                    this.$router.push("/home");
                 }
             });
-        },
-        resetForm(formName) {
-            this.$refs[formName].resetFields();
         }
     }
 };
@@ -117,7 +100,7 @@ export default {
 .el-form-item__content {
     text-align: center;
 }
-.auth{
-    color:#606266;
+.auth {
+    color: #606266;
 }
 </style>
